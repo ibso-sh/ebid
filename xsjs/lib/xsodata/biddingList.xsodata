@@ -1,0 +1,3 @@
+service {
+	"eBidBlockChain.db::BiddingListView" as "BiddingList" key("BiddingId");
+}

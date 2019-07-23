@@ -1,0 +1,27 @@
+service {
+	"eBidBlockChain.db::Bid.Bidding" as "Bidding"
+	  create using "xsjs:biddingCRUDMethod.xsjslib::biddingCreate";
+//	  update using "xsjs:biddingCreateMethod.xsjslib::biddingUpdate"
+//	  delete using "xsjs:biddingCreateMethod.xsjslib::biddingDelete";
+	  
+	 "eBidBlockChain.db::Bid.Bidder" as "Bidder"
+	 create using "xsjs:biddingCRUDMethod.xsjslib::bidderCreate";
+	 
+	 "eBidBlockChain.db::Bid.BiddingRefBidder" as "BRB" 
+	 navigates ( "BRB_REF_BIDDING" as "RBID",
+				"BRB_REF_BIDDER" as "RBIDR");
+	
+	association "BRB_REF_BIDDING" principal "Bidding"("BiddingId") multiplicity "1" 
+								  dependent "BRB"("BiddingId") multiplicity "*";
+	association "BRB_REF_BIDDER" principal "Bidder"("BidderId") multiplicity "1" 
+								  dependent "BRB"("BidderId") multiplicity "*";
+								  
+	 "eBidBlockChain.db::Bid.BiddingHistory" as "History"
+	 navigates ( "History_REF_BIDDING" as "HRBID",
+				"History_REF_BIDDER" as "HRBIDR");
+	
+	association "History_REF_BIDDING" principal "Bidding"("BiddingId") multiplicity "1" 
+								  dependent "History"("BiddingId") multiplicity "*";
+	association "History_REF_BIDDER" principal "Bidder"("BidderId") multiplicity "1" 
+								  dependent "History"("BidderId") multiplicity "*"; 
+	 }

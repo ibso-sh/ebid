@@ -1,0 +1,14 @@
+namespace ebidpoc.db;
+
+using "ebidpoc.db::Bidding" as Bid;
+define view BiddingHistoryView as
+    select from Bid.BiddingHistory
+    {
+        BiddingId    as "BiddingId",
+        BidderId     as "BidderId",
+        Biddingdate  as "BiddingDate",
+        BiddingPrice as "BiddingPrice",
+        Currency     as "Currency",
+        WinFlag      as "WinFlag"
+    }
+    with structured privilege check;

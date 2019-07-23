@@ -1,0 +1,24 @@
+namespace ebidpoc.db;
+
+using "ebidpoc.db::Bidding" as Bid;
+
+define view BiddingListView as
+    select from     Bid.Bidding
+    inner join      Bid.BiddingHistory on
+            Bidding.BiddingId      = BiddingHistory.BiddingId
+        and BiddingHistory.WinFlag = 'X'
+    left outer join Bid.Bidder         on
+            BiddingHistory.BidderId = Bidder.BidderId
+    {
+        Bidding.BiddingId           as "BiddingId",
+        Bidding.Title               as "Title",
+        Bidding.Context             as "Context",
+        Bidding.Status              as "Status",
+        Bidding.InitialPrice        as "InitialPrice",
+        Bidding.StartDate           as "StartDate",
+        Bidding.EndDate             as "EndDate",
+        Bidding.BiddingOpeningDate  as "BiddingOpeningDate",
+        Bidder.BidderName           as "Winner",
+        BiddingHistory.BiddingPrice as "FinalPrice",
+        BiddingHistory.Currency     as "Currency"
+    };

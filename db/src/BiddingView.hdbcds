@@ -1,0 +1,18 @@
+namespace ebidpoc.db;
+
+using "ebidpoc.db::Bidding" as Bid;
+
+define view BiddingView as
+    select from Bid.Bidding
+    {
+        BiddingId          as "BiddingId",
+        Title              as "Title",
+        Context            as "Context",
+        StartDate          as "StartDate",
+        EndDate            as "EndDate",
+        BiddingOpeningDate as "BiddingOpeningDate",
+        InitialPrice       as "InitialPrice",
+        Currency           as "Currency",
+        Status             as "Status"
+    }
+    with structured privilege check;

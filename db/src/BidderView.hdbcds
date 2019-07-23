@@ -1,0 +1,9 @@
+namespace ebidpoc.db;
+using "ebidpoc.db::Bidding" as Bid;
+define view BidderView as
+    select from Bid.Bidder
+    {
+        BidderId   as "BidderId",
+        BidderName as "BidderName"
+    }
+    with structured privilege check;

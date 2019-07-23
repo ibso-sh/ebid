@@ -1,0 +1,60 @@
+namespace ebidpoc.db;
+
+@OData.publish : true
+/*@@layout{"layoutInfo":{"x":-364.4189453125,"y":-184}}*/
+context Bidding {
+    type BusinessKey : String(10);
+    type AmountT : Decimal(15, 2);
+    type CurrencyT : String(5);
+    type StatusT : String(1);
+    
+    entity Bidding {
+        key BiddingId          : BusinessKey;
+            // History            : association[*] to BiddingHistory on History.BiddingId = BiddingId;
+            Title              : String(30);
+            Context            : String(200);
+            StartDate          : LocalDate;
+            EndDate            : LocalDate;
+            BiddingOpeningDate : LocalDate;
+            InitialPrice       : AmountT;
+            Currency           : CurrencyT;
+            Status             : String(1);
+    }
+    technical configuration {
+        column store;
+    };
+
+    entity Bidder {
+        key BidderId   : BusinessKey;
+            // History    : association[*] to BiddingHistory on History.BidderId = BidderId;
+            BidderName : String(30);
+            CreateDate : LocalDate;
+    }
+    technical configuration {
+        column store;
+    };
+
+    entity BiddingRefBidder {
+        key BiddingId  : BusinessKey; // Bidding ID
+        key BidderId   : BusinessKey; // Bidder ID
+            CreateDate : LocalDate;   // Create Date
+    }
+    technical configuration {
+        column store;
+    };
+    
+    entity BiddingHistory {
+        key BiddingId    : BusinessKey;
+            // Biddings     : association[1] to Bidding on Biddings.BiddingId = BiddingId;
+        key BidderId     : BusinessKey;
+            // Bidders      : association[1] to Bidder  on Bidders.BidderId = BidderId;
+        key Biddingdate  : String(20);
+            BiddingPrice : AmountT;
+            Currency     : CurrencyT;
+            WinFlag      : String(1);
+    }
+    technical configuration {
+        column store;
+    };
+};
+
